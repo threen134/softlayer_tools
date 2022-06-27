@@ -8,8 +8,10 @@ pip3 install SoftLayer
 - 根据日期范围列出所有发票
 ./generate_bill.py -s 03/01/2022 -e 03/30/2022 -f pdf -k <api-key> -u <username> -t ALL
 - 根据日期范围和发票类型过滤发票
-./generate_bill.py -s 03/01/2022 -e 03/30/2022 -f pdf -k <api-key> -u <username> -t CREDIT -t 
-
+```
+# 提取时间范围从 03/01/2022 到 03/30/2022之间，账单类型为CREDIT 和  ONE-TIME-CHARGE 类型的账单，并保存为PDF
+./generate_bill.py -s 03/01/2022 -e 03/30/2022 -f pdf -k <api-key> -u <username> -t CREDIT -t ONE-TIME-CHARGE
+```
 
 ## 参数
 - `-s` 起始日志 格式为 03/30/2022  月/日/年
@@ -37,8 +39,11 @@ pip3 install SoftLayer
 - 根据日期范围列出所有发票
 ./generate_bill.py -s 03/01/2022 -e 03/30/2022 -k <api-key> -u <username> -t ALL
 - 根据日期范围和发票类型过滤发票
-./generate_bill.py -s 03/01/2022 -e 03/30/2022  -k <api-key> -u <username> -t CREDIT -t 
 
+```
+# 提取时间范围从 03/01/2022 到 03/30/2022之间，账单类型为CREDIT 和  ONE-TIME-CHARGE 类型的账单摘要信息，并保存本地excel文档
+./generate_bill.py -s 03/01/2022 -e 03/30/2022  -k <api-key> -u <username> -t CREDIT -t ONE-TIME-CHARGE
+```
 
 ## 参数
 - `-s` 起始日志 格式为 03/30/2022  月/日/年
