@@ -4,6 +4,7 @@ import SoftLayer
 import getopt
 import sys
 import json
+from pprint import pprint
 
 api_key = ''
 username = ''
@@ -41,6 +42,8 @@ for opt, arg in opts:
 class SL_Service():
     def __init__(self, username, api_key):
         self.client = SoftLayer.create_client_from_env(username, api_key)
+        debugger = SoftLayer.DebugTransport(self.client.transport)
+        self.client.transport = debugger
         self.account_service = self.client['Account']
         self.poolService = self.client['SoftLayer_Network_Bandwidth_Version1_Allotment']
     
@@ -69,6 +72,10 @@ class SL_Service():
             print("Error. " % (e.faultCode, e.faultString))
             print("列出设备失败，请检查配置与权限。")
             raise e
+    
+    def debug(self):
+        for call in self.client.transport.get_last_calls():
+            pprint(self.client.transport.print_reproduceable(call))
     
     # add device to bandwidth_pool
     def add_pools(self, devices):
