@@ -10,16 +10,13 @@ pip3 install SoftLayer
     ```
       # 设置SL API key 到环境变量
       touch SL_ENV.sh
-      echo "export SL_USERNAME=apikey" >  touch SL_ENV.sh
-      echo "export SL_API_KEY=<替换为你自己的秘密>" >>  touch SL_ENV.sh
+      echo "export SL_USERNAME=apikey" >  SL_ENV.sh
+      echo "export SL_API_KEY=<替换为你自己的秘密>" >> SL_ENV.sh
       source SL_ENV.SH
     ```
 
 ## 使用举例
-    创建2台设备名称为   
-    - s192-dal9.test.com
-    - s193-dal9.test.com
-    的设备。
+    创建2台设备名称为 `s192-dal9.test.com`, `s193-dal9.test.com` 的设备。
 
     ```
      ./order_by_quote.py --quote_id=2987038 --quantity=2 --provisionScripts="https://10.1.1.1/init.sh" --prefix="s" --index=192 --suffix="-dal9" --domain="test.com" private_vlan=3250707
@@ -34,7 +31,7 @@ pip3 install SoftLayer
  - `quantity`             下单的设备数量
  - `provisionScripts`     设备初始化脚本
  - `prefix`               设备名称前缀 
- - `index`                设备名称的索引号吗，向下顺延
+ - `index`                设备名称的索引号码，向下顺延
  - `suffix`               后缀名称，可省略
  - `domain`               设备的域名
  - `private_vlan`         私有VLAN 号吗 
