@@ -28,13 +28,13 @@ try:
         )
 except getopt.GetoptError:
     print("example:")
-    print('         %s --quote_id=2987038 --provisionScripts="https://10.1.1.1/init.sh" --prefix="s" --domain="test.com" private_vlan=3250707"' % sys.argv[0])
+    print('         %s --quote_id=2987038 --quantity=2 --provisionScripts="https://10.1.1.1/init.sh" --prefix="s" --index=192 --suffix="-dal9" --domain="test.com" private_vlan=3250707' % sys.argv[0])
     print("")
     sys.exit(2)
 for opt, arg in opts:
     if opt == '-h':
         print("example:")
-        print('         %s --quote_id=2987038 --provisionScripts="https://10.1.1.1/init.sh" --prefix="s" --domain="test.com" private_vlan=3250707"' % sys.argv[0])
+        print('         %s --quote_id=2987038 --quantity=2 --provisionScripts="https://10.1.1.1/init.sh" --prefix="s" --index=192 --suffix="-dal9" --domain="test.com" private_vlan=3250707' % sys.argv[0])
         print("")
         sys.exit(2)
     elif opt in ("--quote_id"):
