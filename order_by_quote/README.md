@@ -19,7 +19,7 @@ pip3 install SoftLayer
     创建2台设备名称为 `s192-dal9.test.com`, `s193-dal9.test.com` 的设备。
 
     ```
-     ./order_by_quote.py --quote_id=2987038 --quantity=2 --provisionScripts="https://10.1.1.1/init.sh" --prefix="s" --index=192 --suffix="-dal9" --domain="test.com" private_vlan=3250707
+     ./order_by_quote.py --quote_id=2987038 --quantity=2 --provisionScripts="https://10.1.1.1/init.sh" --prefix="s" --index=192 --suffix="-dal9" --domain="test.com" --private_vlan=3250707
     ```
     上面这个命令将创建 2台(`--quantity=2`)物理机，  
     两台物理机的名字分别为 `s192-dal9.test.com` 和 `s192-dal9.test.com`，  
