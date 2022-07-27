@@ -157,19 +157,20 @@ class example():
             print(self.client.transport.print_reproduceable(call))
     
     def confirm(self, quote_id, quantity, provisionScripts="", prefix="", index=0, suffix="", domain="", private_vlan = None, public_vlan = None):
-        print("请核对创建订单信息：")
+        print("")
+        print("请核对下列创建订单信息：")
         if private_vlan:
-            print("私有vlan ID: %d" % private_vlan)
+            print("     私有vlan ID: %d" % private_vlan)
         else:
-            print("私有vlan ID: 系统自动分配")
+            print("     私有vlan ID: 系统自动分配")
         if public_vlan:
-              print("公有vlan ID: %d" % private_vlan)
+              print("   公有vlan ID: %d" % private_vlan)
         else:
-            print("公有vlan ID: 系统自动分配")
+            print("     公有vlan ID: 系统自动分配")
         if provisionScripts:
-            print("初始化脚本为: %s" % provisionScripts)
-        print("折扣 ID 为: %d" % quote_id )
-        print("%d 设备将被创建, 设备名称为:" % quantity)
+            print("     初始化脚本为: %s" % provisionScripts)
+        print("     折扣 ID 为: %d" % quote_id )
+        print("     %d 台设备将被创建, 设备名称为:" % quantity)
         for x in range(quantity): 
             print("         " + prefix + str(index+x) + suffix + "." + domain)
 
