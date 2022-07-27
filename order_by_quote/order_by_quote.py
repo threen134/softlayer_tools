@@ -155,8 +155,32 @@ class example():
     def debug(self):
         for call in self.client.transport.get_last_calls():
             print(self.client.transport.print_reproduceable(call))
+    
+    def confirm(self, quote_id, quantity, provisionScripts="", prefix="", index=0, suffix="", domain="", private_vlan = None, public_vlan = None):
+        print("请核对创建订单信息：")
+        if private_vlan:
+            print("私有vlan ID: %d" % private_vlan)
+        else:
+            print("私有vlan ID: 系统自动分配")
+        if public_vlan:
+              print("公有vlan ID: %d" % private_vlan)
+        else:
+            print("公有vlan ID: 系统自动分配")
+        if provisionScripts:
+            print("初始化脚本为: %s" % provisionScripts)
+        print("折扣 ID 为: %d" % quote_id )
+        print("%d 设备将被创建, 设备名称为:" % quantity)
+        for x in range(quantity): 
+            print("         " + prefix + str(index+x) + suffix + "." + domain)
 
+        confirm = input("是否继续(Y/N)")
+        if confirm.lower() == "y":
+            print("开始下单, 请不要中断脚本.......")
+        else:
+            print("退出....")
+            exit(2)
 
+    
 if __name__ == "__main__":
     #quote_id = 2987038
     main = example()
@@ -171,5 +195,6 @@ if __name__ == "__main__":
     # # main.listVlansInLocation(dal13)
     # backend_vlan = 2068355 #951, bcr01a.dal13
     # front_vlan = 2068353 # 907, fcr01a.dal13
+    main.confirm(quote_id=quote_id, quantity=quantity, provisionScripts=provisionScripts, prefix=prefix, index=index, suffix=suffix, domain=domain, private_vlan=private_vlan, public_vlan=public_vlan)
     main.orderQuote(quote_id=quote_id, quantity=quantity, provisionScripts=provisionScripts, prefix=prefix, index=index, suffix=suffix, domain=domain, private_vlan=private_vlan, public_vlan=public_vlan)
     # main.debug()
