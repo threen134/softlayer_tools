@@ -77,6 +77,8 @@ class example():
         container['complexType'] = "SoftLayer_Container_Product_Order_Hardware_Server"
         container['quantity'] = quantity
         container['hardware'] = []
+        if provisionScripts: 
+            container['provisionScripts'] = []
         for x in range(quantity): 
             baremetal = {
                 'hostname': prefix + str(index+x) + suffix,
@@ -93,8 +95,7 @@ class example():
                     "networkVlan": {"id": int(public_vlan)}}})
                 
             container['hardware'].append(baremetal)
-        if provisionScripts: 
-            container['provisionScripts'] = [provisionScripts]
+            container['provisionScripts'].append(provisionScripts)
         
         # pp(container)
         # result = self.client['Billing_Order_Quote'].verifyOrder(container, id=quote_id)
@@ -173,7 +174,7 @@ class example():
         print("     %d 台设备将被创建, 设备名称为:" % quantity)
         for x in range(quantity): 
             print("         " + prefix + str(index+x) + suffix + "." + domain)
-
+        print("")
         confirm = input("是否继续(Y/N)")
         if confirm.lower() == "y":
             print("开始下单, 请不要中断脚本.......")
