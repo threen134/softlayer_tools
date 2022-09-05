@@ -18,23 +18,24 @@ suffix = ''
 domain = ''
 private_vlan = None
 public_vlan = None
+extendedHardwareTesting = False
 
 
 try:
     opts, args = getopt.getopt(
         sys.argv[1:],
         "",
-        ["quote_id=", "quantity=", "provisionScripts=", "prefix=", "index=", "suffix=", "domain=", "private_vlan=", "public_vlan="],
+        ["quote_id=", "ext_test=", "quantity=", "provisionScripts=", "prefix=", "index=", "suffix=", "domain=", "private_vlan=", "public_vlan="],
         )
 except getopt.GetoptError:
     print("example:")
-    print('         %s --quote_id=2987038 --quantity=2 --provisionScripts="https://10.1.1.1/init.sh" --prefix="s" --index=192 --suffix="-dal9" --domain="test.com" --private_vlan=3250707' % sys.argv[0])
+    print('         %s --quote_id=2987038 --ext_test=true --quantity=2 --provisionScripts="https://10.1.1.1/init.sh" --prefix="s" --index=192 --suffix="-dal9" --domain="test.com" --private_vlan=3250707' % sys.argv[0])
     print("")
     sys.exit(2)
 for opt, arg in opts:
     if opt == '-h':
         print("example:")
-        print('         %s --quote_id=2987038 --quantity=2 --provisionScripts="https://10.1.1.1/init.sh" --prefix="s" --index=192 --suffix="-dal9" --domain="test.com" --private_vlan=3250707' % sys.argv[0])
+        print('         %s --quote_id=2987038 --ext_test=true  --quantity=2 --provisionScripts="https://10.1.1.1/init.sh" --prefix="s" --index=192 --suffix="-dal9" --domain="test.com" --private_vlan=3250707' % sys.argv[0])
         print("")
         sys.exit(2)
     elif opt in ("--quote_id"):
@@ -55,6 +56,11 @@ for opt, arg in opts:
         private_vlan = int(arg)
     elif opt in ("--public_vlan"):
         public_vlan = int(arg)
+    elif opt in ("--ext_test="):
+        if arg == "true":
+            extendedHardwareTesting= True
+        else: 
+            extendedHardwareTesting= False
 
 class example():
 
@@ -63,7 +69,7 @@ class example():
         debugger = SoftLayer.DebugTransport(self.client.transport)
         self.client.transport = debugger
 
-    def orderQuote(self, quote_id, quantity, provisionScripts="", prefix="", index=0, suffix="", domain="", private_vlan = None, public_vlan = None):
+    def orderQuote(self, quote_id, quantity, extendedHardwareTesting=True, provisionScripts="", prefix="", index=0, suffix="", domain="", private_vlan = None, public_vlan = None):
         # If you have more than 1 server in the quote, you will need to append
         # a copy of this for each VSI, with hostnames changed as needed
 
@@ -79,6 +85,8 @@ class example():
         container['hardware'] = []
         if provisionScripts: 
             container['provisionScripts'] = []
+        if extendedHardwareTesting: 
+            container['extendedHardwareTesting'] = True
         for x in range(quantity): 
             baremetal = {
                 'hostname': prefix + str(index+x) + suffix,
@@ -95,7 +103,8 @@ class example():
                     "networkVlan": {"id": int(public_vlan)}}})
                 
             container['hardware'].append(baremetal)
-            container['provisionScripts'].append(provisionScripts)
+            if provisionScripts: 
+                container['provisionScripts'].append(provisionScripts)          
         
         # pp(container)
         # result = self.client['Billing_Order_Quote'].verifyOrder(container, id=quote_id)
@@ -157,7 +166,7 @@ class example():
         for call in self.client.transport.get_last_calls():
             print(self.client.transport.print_reproduceable(call))
     
-    def confirm(self, quote_id, quantity, provisionScripts="", prefix="", index=0, suffix="", domain="", private_vlan = None, public_vlan = None):
+    def confirm(self, quote_id, quantity, extendedHardwareTesting, provisionScripts="", prefix="", index=0, suffix="", domain="", private_vlan = None, public_vlan = None):
         print("")
         print("请核对下列创建订单信息：")
         if private_vlan:
@@ -170,6 +179,10 @@ class example():
             print("     公有vlan ID: 系统自动分配")
         if provisionScripts:
             print("     初始化脚本为: %s" % provisionScripts)
+        if extendedHardwareTesting: 
+            print("     扩展测试: 开启")
+        else:
+            print("     扩展测试: 关闭")
         print("     折扣 ID 为: %d" % quote_id )
         print("     %d 台设备将被创建, 设备名称为:" % quantity)
         for x in range(quantity): 
@@ -197,6 +210,6 @@ if __name__ == "__main__":
     # # main.listVlansInLocation(dal13)
     # backend_vlan = 2068355 #951, bcr01a.dal13
     # front_vlan = 2068353 # 907, fcr01a.dal13
-    main.confirm(quote_id=quote_id, quantity=quantity, provisionScripts=provisionScripts, prefix=prefix, index=index, suffix=suffix, domain=domain, private_vlan=private_vlan, public_vlan=public_vlan)
-    main.orderQuote(quote_id=quote_id, quantity=quantity, provisionScripts=provisionScripts, prefix=prefix, index=index, suffix=suffix, domain=domain, private_vlan=private_vlan, public_vlan=public_vlan)
+    main.confirm(quote_id=quote_id, extendedHardwareTesting=extendedHardwareTesting, quantity=quantity, provisionScripts=provisionScripts, prefix=prefix, index=index, suffix=suffix, domain=domain, private_vlan=private_vlan, public_vlan=public_vlan)
+    main.orderQuote(quote_id=quote_id, extendedHardwareTesting=extendedHardwareTesting, quantity=quantity, provisionScripts=provisionScripts, prefix=prefix, index=index, suffix=suffix, domain=domain, private_vlan=private_vlan, public_vlan=public_vlan)
     # main.debug()
