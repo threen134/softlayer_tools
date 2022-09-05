@@ -19,7 +19,7 @@ pip3 install SoftLayer
     创建2台设备名称为 `s192-dal9.test.com`, `s193-dal9.test.com` 的设备。
 
     ```
-     ./order_by_quote.py --quote_id=2987038 --quantity=2 --provisionScripts="https://10.1.1.1/init.sh" --prefix="s" --index=192 --suffix="-dal9" --domain="test.com" --private_vlan=3250707
+     ./order_by_quote.py --quote_id=2987038 --quantity=2 --ext_test=true --provisionScripts="https://10.1.1.1/init.sh" --prefix="s" --index=192 --suffix="-dal9" --domain="test.com" --private_vlan=3250707
     ```
     上面这个命令将创建 2台(`--quantity=2`)物理机，  
     两台物理机的名字分别为 `s192-dal9.test.com` 和 `s192-dal9.test.com`，  
@@ -36,6 +36,7 @@ pip3 install SoftLayer
  - `domain`               设备的域名
  - `private_vlan`         私有VLAN 号吗 
  - `public_vlan`          公有VLAN 号吗， 可省略
+ - `ext_test`             是否开启扩展测试，扩展测试可以在交付机器之前对机器进行深度测试，从而减小故障率
 
 ## 如何获取您的 quote ID
   - 管理（右上）——> 计费和使用情况 ——> 销售  ——> 报价 ——>  Quota ID
