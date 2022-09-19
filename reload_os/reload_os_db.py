@@ -90,6 +90,7 @@ class SL_Service():
             for ipToReload in self.ipsToReload:
                 reload = self.hardwareService.reloadOperatingSystem('FORCE', config, id=self.serversToReload[ipToReload]['id'])
                 print(reload)
+                print("%s reload success" % ipToReload)
         except SoftLayer.SoftLayerAPIError as e:
             print("Unable to reload the bare metal servers: \nfaultCode= %s, \nfaultString= %s"
                 % (e.faultCode, e.faultString))
