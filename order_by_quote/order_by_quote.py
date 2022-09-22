@@ -106,7 +106,7 @@ class example():
             if provisionScripts: 
                 container['provisionScripts'].append(provisionScripts)          
         
-        # pp(container)
+        pp(container)
         # result = self.client['Billing_Order_Quote'].verifyOrder(container, id=quote_id)
         result = self.client['Billing_Order_Quote'].placeOrder(container, id=quote_id)
         print("================= RECEIPT CONTAINER =================")
